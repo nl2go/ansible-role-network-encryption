@@ -18,8 +18,3 @@
     src: templates/charon-ports.conf.j2
     dest: /etc/strongswan.d/charon-ports.conf
   notify: restart ipsec
-
-#- name: Change ownership of the charon run file
-#  file:
-#    path: /var/run/charon.ctl
-#    group: adm
