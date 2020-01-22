@@ -4,6 +4,7 @@
   tasks:
       - name: Get IPsec connection status
         command: ipsec status
+        changed_when: false
         register: ipsec_status_result
       - name: Validate IPsec connection state
         assert:
