@@ -4,83 +4,90 @@
 class FilterModule(object):
     def filters(self):
         return {
-          'network_encryption_point_to_point_connections': self.point_to_point_connections,
-          'network_encryption_networks': self.networks
+            'network_encryption_point_to_point_connections': self.get_point_to_point_connections,
+            'network_encryption_networks': self.get_networks
         }
 
-    def get_custom_interface_name_or_default(self, hostname, hostvars, interface_variable_name = None):
-        if interface_variable_name:
-            return self.get_custom_interface_name(hostname, hostvars, interface_variable_name)
 
-        return self.get_default_interface_name(hostname, hostvars)
+def get_custom_interface_name_or_default(hostname, hostvars, interface_variable_name = None):
+    if interface_variable_name:
+        return get_custom_interface_name(hostname, hostvars, interface_variable_name)
 
-    def get_interface_address(self, hostname, hostvars, interface_name):
-        interface = hostvars.get(hostname).get('ansible_' + interface_name)
-        if interface:
-            return interface.get('ipv4').get('address')
+    return get_default_interface_name(hostname, hostvars)
 
-        raise Exception('Interface "{}" is not found for host "{}".'.format(interface, hostname))
 
-    def get_custom_interface_name(self, hostname, hostvars, interface_variable_name):
-        interface_name = hostvars.get(hostname).get(interface_variable_name)
+def get_interface_address(hostname, hostvars, interface_name):
+    interface = hostvars.get(hostname).get('ansible_' + interface_name)
+    if interface:
+        return interface.get('ipv4').get('address')
 
-        if interface_name:
-            return interface_name
+    raise Exception('Interface "{}" is not found for host "{}".'.format(interface, hostname))
 
-        raise Exception('Variable "{}" is not defined for host "{}".'.format(interface_variable_name, hostname))
 
-    def get_default_interface_name(self, hostname, hostvars):
-        return hostvars.get(hostname).get('ansible_default_ipv4').get('interface')
+def get_custom_interface_name(hostname, hostvars, interface_variable_name):
+    interface_name = hostvars.get(hostname).get(interface_variable_name)
 
-    def point_to_point_connections(self, remote_hostnames, hostname, hostvars, interface_variable_name = None):
-        host_interface_name = self.get_custom_interface_name_or_default(hostname, hostvars, interface_variable_name)
-        host_interface_address = self.get_interface_address(hostname, hostvars, host_interface_name)
+    if interface_name:
+        return interface_name
 
-        connections = []
+    raise Exception('Variable "{}" is not defined for host "{}".'.format(interface_variable_name, hostname))
 
-        for remote_hostname in remote_hostnames:
-            if hostname == remote_hostname:
-                continue
 
-            remote_host_interface_name = self.get_custom_interface_name_or_default(remote_hostname, hostvars, interface_variable_name)
-            remote_host_interface_address = self.get_interface_address(remote_hostname, hostvars, remote_host_interface_name)
+def get_default_interface_name(hostname, hostvars):
+    return hostvars.get(hostname).get('ansible_default_ipv4').get('interface')
 
-            connections.append({
-              'local': {
+
+def get_point_to_point_connections(remote_hostnames, hostname, hostvars, interface_variable_name = None):
+    host_interface_name = get_custom_interface_name_or_default(hostname, hostvars, interface_variable_name)
+    host_interface_address = get_interface_address(hostname, hostvars, host_interface_name)
+
+    connections = []
+
+    for remote_hostname in remote_hostnames:
+        if hostname == remote_hostname:
+            continue
+
+        remote_host_interface_name = get_custom_interface_name_or_default(remote_hostname, hostvars, interface_variable_name)
+        remote_host_interface_address = get_interface_address(remote_hostname, hostvars, remote_host_interface_name)
+
+        connections.append({
+            'local': {
                 'hostname': hostname,
                 'interface': host_interface_name,
                 'address': host_interface_address
-              },
-              'remote': {
+            },
+            'remote': {
                 'hostname': remote_hostname,
                 'interface': remote_host_interface_name,
                 'address': remote_host_interface_address
-              }
-            })
+            }
+        })
 
-        return connections
+    return connections
 
-    def networks(self, networks, hostvars, variable_name='network_encryption_host_networks'):
-        networks = self.list_to_dict(networks)
 
-        for host in hostvars:
-            host_config = hostvars.get(host)
-            host_networks = host_config.get(variable_name)
-            if host_networks:
-                for host_network in host_networks:
-                    network_name = host_network.get('name')
-                    network = networks.get(network_name)
-                    hosts = network.get('hosts')
-                    if not hosts:
-                        hosts = []
-                        network['hosts'] = hosts
-                    hosts.append(host)
-        return list(networks.values())
+def get_networks(networks, hostvars, variable_name='network_encryption_host_networks'):
+    networks = list_to_dict(networks)
 
-    def list_to_dict(self, objs, attr='name'):
-        obj_dict = {}
-        for obj in objs:
-            key = obj.get(attr)
-            obj_dict[key] = obj
+    for host in hostvars:
+        host_config = hostvars.get(host)
+        host_networks = host_config.get(variable_name)
+        if host_networks:
+            for host_network in host_networks:
+                network_name = host_network.get('name')
+                network = networks.get(network_name)
+                hosts = network.get('hosts')
+                if not hosts:
+                    hosts = []
+                    network['hosts'] = hosts
+                hosts.append(host)
+    return list(networks.values())
 
-        return obj_dict
+
+def list_to_dict(self, objs, attr='name'):
+    obj_dict = {}
+    for obj in objs:
+        key = obj.get(attr)
+        obj_dict[key] = obj
+
+    return obj_dict
