@@ -5,5 +5,6 @@
 - name: Configure network
   include_tasks: network.yml
   with_items: "{{ network_encryption_networks | network_encryption_networks(hostvars) }}"
+  when: inventory_hostname in network_encryption_network.hosts
   loop_control:
     loop_var: network_encryption_network

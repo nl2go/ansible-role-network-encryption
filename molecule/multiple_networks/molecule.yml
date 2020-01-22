@@ -1,0 +1,66 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: one
+    image: ubuntu:16.04
+    dockerfile: ../resources/playbooks/Dockerfile.j2
+    capabilities:
+      - NET_ADMIN
+    ports:
+      - 501
+      - 4501
+  - name: two
+    image: ubuntu:16.04
+    dockerfile: ../resources/playbooks/Dockerfile.j2
+    capabilities:
+      - NET_ADMIN
+    ports:
+      - 501
+      - 4501
+  - name: three
+    image: ubuntu:16.04
+    dockerfile: ../resources/playbooks/Dockerfile.j2
+    capabilities:
+      - NET_ADMIN
+    ports:
+      - 501
+      - 4501
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        network_encryption_networks:
+          - name: network_1
+            psk: secret_1
+          - name: network_2
+            psk: secret_2
+    host_vars:
+      one:
+        network_encryption_host_networks:
+          - name: network_1
+        expected_active_connections: 1
+      two:
+        network_encryption_host_networks:
+          - name: network_1
+          - name: network_2
+        expected_active_connections: 2
+      three:
+        network_encryption_host_networks:
+          - name: network_2
+        expected_active_connections: 1
+  lint:
+    name: ansible-lint
+  playbooks:
+    prepare: ../resources/playbooks/prepare.yml
+    converge: ../resources/playbooks/playbook.yml
+    verify: ../resources/playbooks/verify/default.yml
+verifier:
+  name: ansible
+  lint:
+    name: ansible-lint
