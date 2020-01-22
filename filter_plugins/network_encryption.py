@@ -4,8 +4,8 @@
 class FilterModule(object):
     def filters(self):
         return {
-            'network_encryption_point_to_point_connections': self.get_point_to_point_connections,
-            'network_encryption_networks': self.get_networks
+            'network_encryption_point_to_point_connections': get_point_to_point_connections,
+            'network_encryption_networks': get_networks
         }
 
 
