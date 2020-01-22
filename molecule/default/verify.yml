@@ -1,0 +1,11 @@
+---
+- name: Verify network encryption
+  hosts: all
+  tasks:
+      - name: Get IPsec connection status
+        command: ipsec status
+        register: ipsec_status_result
+      - name: Validate IPsec connection state
+        assert:
+          that: '1 up, 0 connecting' in ipsec_status_result.stdout
+          fail_msg: 'Unexpected IPsec connection state: {{ ipsec_status_result.stdout }}'
