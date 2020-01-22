@@ -8,11 +8,14 @@
       paths:
         - ../vars
   tags: ['network-encryption', 'network-encryption-variables']
+  when: network_encryption_host_networks is defined and (network_encryption_host_networks | length > 0)
 
 - name: Install strongSwan
   include: install.yml
   tags: ['network-encryption', 'network-encryption-install']
+  when: network_encryption_host_networks is defined and (network_encryption_host_networks | length > 0)
 
 - name: Configure strongSwan
   include: config/main.yml
   tags: ['network-encryption', 'network-encryption-config']
+  when: network_encryption_host_networks is defined and (network_encryption_host_networks | length > 0)

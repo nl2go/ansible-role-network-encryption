@@ -1,0 +1,8 @@
+---
+- name: Verify no changes were made to the hosts
+  hosts: all
+  tasks:
+      - name: Ensure strongswan package is absent
+        package:
+          name: strongswan
+          state: absent
