@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed|comment }}
 
 conn {{ network_encryption_network.name }}
   ike=aes256gcm16-prfsha384-modp4096,aes256gcm16-prfsha384-ecp384!
