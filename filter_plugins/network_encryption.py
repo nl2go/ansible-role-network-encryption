@@ -84,7 +84,7 @@ def get_networks(networks, hostvars, variable_name='network_encryption_host_netw
     return list(networks.values())
 
 
-def list_to_dict(self, objs, attr='name'):
+def list_to_dict(objs, attr='name'):
     obj_dict = {}
     for obj in objs:
         key = obj.get(attr)
