@@ -8,12 +8,6 @@
         state: present
       with_items:
         - kmod
-        - dbus
-        - nano
-    - name: Ensure dbus service is started
-      service:
-        name: dbus
-        state: started
     - name: Enable IP forward
       lineinfile:
         path: /etc/sysctl.conf
