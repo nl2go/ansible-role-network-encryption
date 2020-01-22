@@ -1,19 +1,9 @@
 ---
-- name: Install strongSwan and plugins on Ubuntu 16 and before
-  apt:
-    name:
-      - strongswan
-      - strongswan-plugin-openssl
+- name: Install required packages
+  package:
+    name: "{{ item }}"
     state: present
-  when: ansible_lsb.major_release|int <= 16
-
-- name: Install strongSwan and plugins on Ubuntu 18
-  apt:
-    name:
-      - strongswan
-      - libstrongswan-standard-plugins
-    state: present
-  when: ansible_lsb.major_release|int >= 18
+  with_items: "{{ network_encryption_packages }}"
 
 - name: Create IPsec service
   template:
