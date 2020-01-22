@@ -1,0 +1,18 @@
+---
+- name: Gather OS specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version }}.yml"
+        - "default.yml"
+      paths:
+        - ../vars
+  tags: ['network-encryption', 'network-encryption-variables']
+
+- name: Install strongSwan
+  include: install.yml
+  tags: ['network-encryption', 'network-encryption-install']
+
+- name: Configure strongSwan
+  include: config/main.yml
+  tags: ['network-encryption', 'network-encryption-config']

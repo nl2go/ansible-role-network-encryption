@@ -1,0 +1,26 @@
+---
+galaxy_info:
+  author: nl2go
+  role_name: network_encryption
+  description: "Manage network encryption between inventory hosts based on\
+    [IPsec](https://de.wikipedia.org/wiki/IPsec) /\
+    [strongSwan](https://www.strongswan.org/)."
+  company: Newsletter2Go GmbH
+  issue_tracker_url:
+    "https://github.com/nl2go/ansible-role-network-encryption/issues"
+  license: MIT
+  min_ansible_version: 2.6
+  github_branch: master
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+  galaxy_tags:
+    - network
+    - encryption
+    - ipsec
+    - strongswan
+dependencies: []

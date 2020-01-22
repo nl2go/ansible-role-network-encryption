@@ -1,0 +1,25 @@
+---
+- name: Include IPsec secrets files
+  lineinfile:
+    path: /etc/ipsec.secrets
+    regexp: '^include /etc/ipsec.\*.secrets$'
+    line: "include /etc/ipsec.*.secrets"
+  notify: reload ipsec
+
+- name: Include IPsec configuration files
+  lineinfile:
+    path: /etc/ipsec.conf
+    regexp: '^include /etc/ipsec.\*.conf$'
+    line: "include /etc/ipsec.*.conf"
+  notify: reload ipsec
+
+- name: Copy strongSwan charon port and net traversal config template
+  template:
+    src: templates/charon-ports.conf.j2
+    dest: /etc/strongswan.d/charon-ports.conf
+  notify: restart ipsec
+
+#- name: Change ownership of the charon run file
+#  file:
+#    path: /var/run/charon.ctl
+#    group: adm

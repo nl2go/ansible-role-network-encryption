@@ -1,0 +1,18 @@
+---
+- name: Configure daemon
+  include_tasks: daemon.yml
+
+- name: Configure network
+  include_tasks: network.yml
+  with_items: "{{ network_encryption_networks | network_encryption_networks(hostvars) }}"
+  loop_control:
+    loop_var: network_encryption_network
+
+- name: Test
+  debug:
+    msg: "{{ ansible_default_ipv4 }}"
+
+
+- name: Test
+  debug:
+    msg: "{{ ansible_interfaces }}"

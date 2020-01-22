@@ -1,0 +1,23 @@
+---
+- name: Prepare hosts
+  hosts: all
+  tasks:
+    - name: Install required packages
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - kmod
+        - dbus
+        - nano
+    - name: Ensure dbus service is started
+      service:
+        name: dbus
+        state: started
+    - name: Enable IP forward
+      lineinfile:
+        path: /etc/sysctl.conf
+        regexp: '^net\.ipv4\.ip_forward=1$'
+        line: "net.ipv4.ip_forward=1"
+    - name: Reload sysctl config
+      command: sysctl -p /etc/sysctl.conf

@@ -1,0 +1,25 @@
+---
+- name: Determine point to point connections
+  set_fact:
+    network_encryption_connections: "{{ network_encryption_network.hosts | network_encryption_point_to_point_connections(inventory_hostname, hostvars) }}"
+
+- name: Set IPsec secrets file path
+  set_fact:
+    ipsec_secrets_file_path: "/etc/ipsec.{{ network_encryption_network.name }}.secrets"
+    ipsec_config_file_path: "/etc/ipsec.{{ network_encryption_network.name }}.conf"
+
+- name: "adasdds"
+  debug:
+    msg: "{{ network_encryption_connections }}"
+
+- name: Copy IPsec secrets template
+  template:
+    src: templates/ipsec.secrets.j2
+    dest: "{{ ipsec_secrets_file_path }}"
+  notify: reload ipsec
+
+- name: Copy IPSec configuration template
+  template:
+    src: templates/ipsec.conf.j2
+    dest: "{{ ipsec_config_file_path }}"
+  notify: reload ipsec

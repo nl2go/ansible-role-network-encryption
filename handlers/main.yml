@@ -1,0 +1,11 @@
+---
+- name: reload ipsec
+  service:
+    name: "{{ network_encryption_ipsec_service_name }}"
+    state: reloaded
+
+- name: restart ipsec
+  service:
+    name: "{{ network_encryption_ipsec_service_name }}"
+    enabled: yes
+    state: restarted

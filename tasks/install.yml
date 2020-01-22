@@ -1,0 +1,30 @@
+---
+- name: Install strongSwan and plugins on Ubuntu 16 and before
+  apt:
+    name:
+      - strongswan
+      - strongswan-plugin-openssl
+    state: present
+  when: ansible_lsb.major_release|int <= 16
+
+- name: Install strongSwan and plugins on Ubuntu 18
+  apt:
+    name:
+      - strongswan
+      - libstrongswan-standard-plugins
+    state: present
+  when: ansible_lsb.major_release|int >= 18
+
+- name: Create IPsec service
+  template:
+    src: "./{{ network_encryption_ipsec_service_template_name }}"
+    dest: "{{ network_encryption_ipsec_service_destination_path }}"
+    owner: 'root'
+    group: 'root'
+    mode: 'u=rwx,g=rx,o=rx'
+
+- name: Ensure IPsec service is started
+  service:
+    name: "{{ network_encryption_ipsec_service_name }}"
+    enabled: yes
+    state: started

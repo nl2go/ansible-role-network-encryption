@@ -1,0 +1,49 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: one
+    image: ubuntu:16.04
+    capabilities:
+      - NET_ADMIN
+    ports:
+      - 501
+      - 4501
+  - name: two
+    image: ubuntu:16.04
+    capabilities:
+      - NET_ADMIN
+    ports:
+      - 501
+      - 4501
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        network_encryption_host_networks:
+          - name: default
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - destroy
+    # - dependency
+    - syntax
+    - create
+    - prepare
+    #- converge
+    #- idempotence
+    # - side_effect
+    #- verify
+    #- destroy

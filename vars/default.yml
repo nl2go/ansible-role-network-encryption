@@ -1,0 +1,4 @@
+---
+network_encryption_ipsec_service_name: ipsec.service
+network_encryption_ipsec_service_template_name: ipsec.systemd.j2
+network_encryption_ipsec_service_destination_path: /etc/systemd/system/ipsec.service

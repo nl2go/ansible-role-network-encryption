@@ -1,0 +1,8 @@
+---
+network_encryption_charon_port: 500
+network_encryption_port_nat_t: 4500
+network_encryption_networks:
+  - name: default
+    psk: secret
+network_encryption_host_networks:
+  - name: default

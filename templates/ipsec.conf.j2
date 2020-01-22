@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+
+conn {{ network_encryption_network.name }}
+  ike=aes256gcm16-prfsha384-modp4096,aes256gcm16-prfsha384-ecp384!
+  esp=aes256gcm16-modp4096,aes256gcm16-ecp384!
+  rightikeport={{ network_encryption_charon_port }}
+  leftikeport={{ network_encryption_charon_port }}
+  keyingtries=0
+  ikelifetime=1h
+  lifetime=8h
+  dpddelay=30
+  dpdtimeout=120
+  dpdaction=clear
+  authby=secret
+  keyexchange=ikev2
+  type=tunnel
+
+{% for connection in network_encryption_connections %}
+# {{ connection.local.hostname }} ({{ connection.local.interface }}) -> {{ connection.local.hostname }} ({{ connection.remote.interface }})
+conn {{ network_encryption_network.name }}-{{ connection.local.hostname }}-to-{{ connection.remote.hostname }}
+  left={{ connection.local.address }}
+  right={{ connection.remote.address }}
+  auto=start
+  also={{ network_encryption_network.name }}
+{% endfor %}
