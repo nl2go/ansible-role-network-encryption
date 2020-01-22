@@ -1,7 +1,7 @@
 ---
 - name: Determine point to point connections
   set_fact:
-    network_encryption_connections: "{{ network_encryption_network.hosts | network_encryption_point_to_point_connections(inventory_hostname, hostvars) }}"
+    network_encryption_connections: "{{ network_encryption_network.hosts | network_encryption_point_to_point_connections(inventory_hostname, hostvars, network_encryption_network.interface) }}"
 
 - name: Set IPsec secrets file path
   set_fact:

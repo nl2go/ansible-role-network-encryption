@@ -31,6 +31,13 @@ UDP port used locally in case of NAT-T. If set to 0 a random port will be alloca
 Separate networks can be configured using `network_encryption_networks` variable. The `name` of the network is mandatory and
 used for identification. Pre-shared key can be specified using `psk`.
 
+    network_encryption_networks:
+      - name: default
+        interface: eth0
+        psk: secret
+
+The interface can be specified using `interface` variable. If not specified, it defaults to `ansible_default_ipv4.interface`.
+
     network_encryption_host_networks:
       - name: default
 
