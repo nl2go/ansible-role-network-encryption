@@ -24,6 +24,18 @@ UDP port used locally. If set to 0 a random port will be allocated (s. [strongsw
     
 UDP port used locally in case of NAT-T. If set to 0 a random port will be allocated. Has to be different from charon.port, otherwise a random port will be allocated (s. [strongswan.conf](https://wiki.strongswan.org/projects/strongswan/wiki/StrongswanConf)).
 
+    network_encryption_networks:
+      - name: default
+        psk: secret
+        
+Separate networks can be configured using `network_encryption_networks` variable. The `name` of the network is mandatory and
+used for identification. Pre-shared key can be specified using `psk`.
+
+    network_encryption_host_networks:
+      - name: default
+
+Hosts can be attached to the networks using `network_encryption_host_networks` variable. Networks are referenced by `name`.      
+
 ## Tags
 
 Tags can be used to limit the role execution to a particular task module. Following tags are available:
