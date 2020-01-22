@@ -8,10 +8,6 @@
     ipsec_secrets_file_path: "/etc/ipsec.{{ network_encryption_network.name }}.secrets"
     ipsec_config_file_path: "/etc/ipsec.{{ network_encryption_network.name }}.conf"
 
-- name: "adasdds"
-  debug:
-    msg: "{{ network_encryption_connections }}"
-
 - name: Copy IPsec secrets template
   template:
     src: templates/ipsec.secrets.j2
