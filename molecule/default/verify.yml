@@ -6,6 +6,9 @@
         command: ipsec status
         changed_when: false
         register: ipsec_status_result
+      - name: Display IPsec connection status
+        debug:
+          msg: "{{ ipsec_status_result.stdout }}"
       - name: Validate IPsec connection state
         assert:
           that: "'1 up, 0 connecting' in ipsec_status_result.stdout"
