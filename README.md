@@ -2,7 +2,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/nl2go/ansible-role-network-encryption)](https://codecov.io/gh/nl2go/ansible-role-network-encryption)
 [![Ansible Galaxy](https://img.shields.io/badge/role-nl2go.network_encryption-blue.svg)](https://galaxy.ansible.com/nl2go/network_encryption/)
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/nl2go/ansible-role-network-encryption)](https://galaxy.ansible.com/nl2go/network_encryption)
-[![Ansible Galaxy Downloads](https://img.shields.io/ansible/role/d/45353.svg?color=blue)](https://galaxy.ansible.com/nl2go/network_encryption/)
+[![Ansible Galaxy Downloads](https://img.shields.io/ansible/role/d/46005.svg?color=blue)](https://galaxy.ansible.com/nl2go/network_encryption/)
 
 # Ansible Role: Network Encryption
 
