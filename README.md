@@ -28,8 +28,13 @@ UDP port used locally in case of NAT-T. If set to 0 a random port will be alloca
       - name: default
         psk: secret
         
-Separate networks can be configured using `network_encryption_networks` variable. The `name` of the network is mandatory and
+Networks must be configured using `network_encryption_networks` variable. Networks in this context are logical groups that share similar configuration. The `name` of the network is mandatory and
 used for identification. Pre-shared key can be specified using `psk`.
+
+    network_encryption_host_networks:
+      - name: default
+
+Hosts can be attached to the networks using `network_encryption_host_networks` variable. Networks are referenced by `name`.      
 
     network_encryption_networks:
       - name: default
@@ -38,10 +43,29 @@ used for identification. Pre-shared key can be specified using `psk`.
 
 The interface can be specified using `interface` variable. If not specified, it defaults to `ansible_default_ipv4.interface`.
 
-    network_encryption_host_networks:
+    network_encryption_networks:
       - name: default
+        psk: secret
+        params:
+            lifetime: 8h
+            
+General connection parameters like `lifetime` may be set within `params` section (s. [ipsec.conf](https://wiki.strongswan.org/projects/strongswan/wiki/ConnSection) for full parameter description).
 
-Hosts can be attached to the networks using `network_encryption_host_networks` variable. Networks are referenced by `name`.      
+    network_encryption_default_connection_params:
+      ike: aes256gcm16-prfsha384-modp4096,aes256gcm16-prfsha384-ecp384!
+      esp: aes256gcm16-modp4096,aes256gcm16-ecp384!
+      keyingtries: 0
+      ikelifetime: 1h
+      lifetime: 8h
+      dpddelay: 30
+      dpdtimeout: 120
+      dpdaction: clear
+      authby: secret
+      keyexchange: ikev2
+      type: tunnel
+
+The `params` within `network_encryption_networks` extend/override default connection parameters present above. 
+
 
 ## Tags
 

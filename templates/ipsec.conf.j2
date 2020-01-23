@@ -1,19 +1,11 @@
 {{ ansible_managed|comment }}
 
 conn {{ network_encryption_network.name }}
-  ike=aes256gcm16-prfsha384-modp4096,aes256gcm16-prfsha384-ecp384!
-  esp=aes256gcm16-modp4096,aes256gcm16-ecp384!
   rightikeport={{ network_encryption_charon_port }}
   leftikeport={{ network_encryption_charon_port }}
-  keyingtries=0
-  ikelifetime=1h
-  lifetime=8h
-  dpddelay=30
-  dpdtimeout=120
-  dpdaction=clear
-  authby=secret
-  keyexchange=ikev2
-  type=tunnel
+{% for connection_param_name in network_encryption_connection_params %}
+  {{ connection_param_name }}={{ network_encryption_connection_params[connection_param_name] }}
+{% endfor %}
 
 {% for connection in network_encryption_connections %}
 # {{ connection.local.hostname }} ({{ connection.local.interface }}) -> {{ connection.local.hostname }} ({{ connection.remote.interface }})
