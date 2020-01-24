@@ -16,8 +16,7 @@
 
 - name: Set IPsec secrets file path
   set_fact:
-    ipsec_secrets_file_path: "/etc/ipsec.{{ network_encryption_network.name }}.secrets"
-    ipsec_config_file_path: "/etc/ipsec.{{ network_encryption_network.name }}.conf"
+    ipsec_secrets_file_path: "{{ network_encryption_config_dir }}/{{ network_encryption_network.name }}.secrets"
 
 - name: Copy IPsec secrets template
   template:
@@ -25,8 +24,12 @@
     dest: "{{ ipsec_secrets_file_path }}"
   notify: reload ipsec
 
-- name: Copy IPSec configuration template
+- name: Copy IPsec connection configs
   template:
     src: templates/ipsec.conf.j2
-    dest: "{{ ipsec_config_file_path }}"
+    dest: "{{ network_encryption_config_dir }}/\
+      {{ network_encryption_network.name }}-{{ connection.local.hostname }}-to-{{ connection.remote.hostname }}.conf"
+  with_items: "{{ network_encryption_connections }}"
+  loop_control:
+    loop_var: connection
   notify: reload ipsec

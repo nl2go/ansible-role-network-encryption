@@ -1,17 +1,12 @@
 {{ ansible_managed|comment }}
 
-conn {{ network_encryption_network.name }}
-  rightikeport={{ network_encryption_charon_port }}
-  leftikeport={{ network_encryption_charon_port }}
-{% for connection_param_name in network_encryption_connection_params %}
-  {{ connection_param_name }}={{ network_encryption_connection_params[connection_param_name] }}
-{% endfor %}
-
-{% for connection in network_encryption_connections %}
-# {{ connection.local.hostname }} ({{ connection.local.interface }}) -> {{ connection.local.hostname }} ({{ connection.remote.interface }})
+# {{ connection.local.hostname }} ({{ connection.local.interface }}) -> {{ connection.remote.hostname }} ({{ connection.remote.interface }})
 conn {{ network_encryption_network.name }}-{{ connection.local.hostname }}-to-{{ connection.remote.hostname }}
-  left={{ connection.local.address }}
-  right={{ connection.remote.address }}
-  auto=start
-  also={{ network_encryption_network.name }}
+    left={{ connection.local.address }}
+    right={{ connection.remote.address }}
+    auto=start
+    rightikeport={{ network_encryption_charon_port }}
+    leftikeport={{ network_encryption_charon_port }}
+{% for connection_param_name in network_encryption_connection_params %}
+    {{ connection_param_name }}={{ network_encryption_connection_params[connection_param_name] }}
 {% endfor %}

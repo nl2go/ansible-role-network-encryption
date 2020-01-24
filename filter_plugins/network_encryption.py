@@ -66,10 +66,10 @@ def get_point_to_point_connections(remote_hostnames, hostname, hostvars, interfa
     return connections
 
 
-def get_networks(networks, hostvars, variable_name='network_encryption_host_networks'):
+def get_networks(networks, play_hosts, hostvars, variable_name='network_encryption_host_networks'):
     networks = list_to_dict(networks)
 
-    for host in hostvars:
+    for host in play_hosts:
         host_config = hostvars.get(host)
         host_networks = host_config.get(variable_name)
         if host_networks:

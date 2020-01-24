@@ -1,16 +1,22 @@
 ---
+- name: Create IPsec config directory
+  file:
+    path: "{{ network_encryption_config_dir }}"
+    state: directory
+    mode: '0755'
+
 - name: Include IPsec secrets files
   lineinfile:
     path: /etc/ipsec.secrets
-    regexp: '^include /etc/ipsec.\*.secrets$'
-    line: "include /etc/ipsec.*.secrets"
+    regexp: "^include {{ network_encryption_config_dir + '/*.secrets' | regex_escape }}$"
+    line: "include {{ network_encryption_config_dir }}/*.secrets"
   notify: reload ipsec
 
 - name: Include IPsec configuration files
   lineinfile:
     path: /etc/ipsec.conf
-    regexp: '^include /etc/ipsec.\*.conf$'
-    line: "include /etc/ipsec.*.conf"
+    regexp: "^include {{ network_encryption_config_dir + '/*.conf' | regex_escape }}$"
+    line: "include {{ network_encryption_config_dir }}/*.conf"
   notify: reload ipsec
 
 - name: Copy strongSwan charon port and net traversal config template

@@ -1,4 +1,5 @@
 ---
+network_encryption_config_dir: "/etc/ipsec.d/{{ role_name }}"
 network_encryption_charon_port: 500
 network_encryption_port_nat_t: 4500
 network_encryption_networks: []
