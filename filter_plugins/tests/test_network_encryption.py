@@ -10,6 +10,7 @@ class NetworkEncryptionTest(unittest.TestCase):
             'name': 'default',
             'psk': 'secret'
         }]
+        play_hosts = ['one']
         hostvars = {
             'one' : {
                 'network_encryption_host_networks': [{
@@ -18,7 +19,7 @@ class NetworkEncryptionTest(unittest.TestCase):
             }
         }
 
-        result = get_networks(networks, hostvars)
+        result = get_networks(networks, play_hosts, hostvars)
 
         self.assertEqual(result, [{
             'name': 'default',
