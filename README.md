@@ -66,6 +66,9 @@ General connection parameters like `lifetime` may be set within `params` section
 
 The `params` within `network_encryption_networks` extend/override default connection parameters present above. 
 
+    network_encryption_config_dir: "/etc/ipsec.d/{{ role_name }}"
+    
+Defines the custom IPsec configuration directory for isolation purposes.
 
 ## Tags
 
