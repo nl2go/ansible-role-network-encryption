@@ -24,5 +24,6 @@ class NetworkEncryptionTest(unittest.TestCase):
         self.assertEqual(result, [{
             'name': 'default',
             'psk': 'secret',
-            'hosts': ['one']
+            'hosts': ['one'],
+            'absent_hosts': []
         }])
