@@ -9,6 +9,14 @@
       network_encryption_config.hosts \
       | network_encryption_point_to_point_connections(inventory_hostname, hostvars, network_encryption_config_interface)\
     }}"
+    network_encryption_absent_connections: "{{ \
+      network_encryption_config.absent_hosts \
+      | network_encryption_point_to_point_connections(inventory_hostname, hostvars, network_encryption_config_interface)\
+    }}"
+    network_encryption_absent_all_connections: "{{ \
+      network_encryption_config.hosts + network_encryption_config.absent_hosts \
+      | network_encryption_point_to_point_connections(inventory_hostname, hostvars, network_encryption_config_interface)\
+    }}"
     network_encryption_connection_params: "{{ \
       network_encryption_default_connection_params \
       | combine(network_encryption_config.params | default({})) \
@@ -18,18 +26,8 @@
   set_fact:
     ipsec_secrets_file_path: "{{ network_encryption_config_dir }}/{{ network_encryption_config.name }}.secrets"
 
-- name: Copy IPsec secrets template
-  template:
-    src: templates/ipsec.secrets.j2
-    dest: "{{ ipsec_secrets_file_path }}"
-  notify: reload ipsec
+- name: Configure IPsec secrets
+  include_tasks: secret/main.yml
 
-- name: Copy IPsec connection configs
-  template:
-    src: templates/ipsec.conf.j2
-    dest: "{{ network_encryption_config_dir }}/\
-      {{ network_encryption_config.name }}-{{ connection.local.hostname }}-to-{{ connection.remote.hostname }}.conf"
-  with_items: "{{ network_encryption_connections }}"
-  loop_control:
-    loop_var: connection
-  notify: reload ipsec
+- name: Configure IPsec secrets
+  include_tasks: connection/main.yml

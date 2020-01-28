@@ -1,0 +1,8 @@
+---
+- name: Remove all IPsec connection configs
+  include_tasks: delete.yml
+  when: inventory_hostname in network_encryption_config.absent_hosts
+
+- name:  Add IPsec connection configs
+  include_tasks: update.yml
+  when: inventory_hostname in network_encryption_config.hosts

@@ -1,10 +1,11 @@
 ---
 - name: Configure daemon
-  include_tasks: daemon.yml
+  include_tasks: daemon/main.yml
 
 - name: Configure network
-  include_tasks: network.yml
+  include_tasks: network/main.yml
   with_items: "{{ network_encryption_configs | network_encryption_configs(play_hosts, hostvars) }}"
   when: inventory_hostname in network_encryption_config.hosts
+    or inventory_hostname in network_encryption_config.absent_hosts
   loop_control:
     loop_var: network_encryption_config

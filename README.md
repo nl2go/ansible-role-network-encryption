@@ -36,6 +36,12 @@ used for identification. Pre-shared key can be specified using `psk`.
 
 Hosts can be attached to a configuration set using `network_encryption_host_configs` variable. Configuration sets are referenced by `name`.      
 
+    network_encryption_host_configs:
+      - name: default
+        state: absent
+
+A host can be detached from the configuration set using `state: absent`.        
+
     network_encryption_configs:
       - name: default
         interface: eth0

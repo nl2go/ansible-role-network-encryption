@@ -1,0 +1,10 @@
+---
+- name: Remove IPsec connection configs
+  file:
+    path: "{{ network_encryption_config_dir }}/\
+      {{ network_encryption_config.name }}-{{ connection.local.hostname }}-to-{{ connection.remote.hostname }}.conf"
+    state: absent
+  with_items: "{{ network_encryption_absent_all_connections }}"
+  loop_control:
+    loop_var: connection
+  notify: reload ipsec
