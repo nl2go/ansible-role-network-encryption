@@ -2,8 +2,8 @@
 network_encryption_config_dir: "/etc/ipsec.d/{{ role_name }}"
 network_encryption_charon_port: 500
 network_encryption_port_nat_t: 4500
-network_encryption_networks: []
-network_encryption_host_networks: []
+network_encryption_configs: []
+network_encryption_host_configs: []
 network_encryption_default_connection_params:
   ike: aes256gcm16-prfsha384-modp4096,aes256gcm16-prfsha384-ecp384!
   esp: aes256gcm16-modp4096,aes256gcm16-ecp384!

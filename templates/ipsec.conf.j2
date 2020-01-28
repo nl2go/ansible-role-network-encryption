@@ -1,7 +1,7 @@
 {{ ansible_managed|comment }}
 
 # {{ connection.local.hostname }} ({{ connection.local.interface }}) -> {{ connection.remote.hostname }} ({{ connection.remote.interface }})
-conn {{ network_encryption_network.name }}-{{ connection.local.hostname }}-to-{{ connection.remote.hostname }}
+conn {{ network_encryption_config.name }}-{{ connection.local.hostname }}-to-{{ connection.remote.hostname }}
     left={{ connection.local.address }}
     right={{ connection.remote.address }}
     auto=start

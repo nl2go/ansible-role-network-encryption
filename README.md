@@ -24,26 +24,26 @@ UDP port used locally. If set to 0 a random port will be allocated (s. [strongsw
     
 UDP port used locally in case of NAT-T. If set to 0 a random port will be allocated. Has to be different from charon.port, otherwise a random port will be allocated (s. [strongswan.conf](https://wiki.strongswan.org/projects/strongswan/wiki/StrongswanConf)).
 
-    network_encryption_networks:
+    network_encryption_configs:
       - name: default
         psk: secret
         
-Networks must be configured using `network_encryption_networks` variable. Networks in this context are logical groups that share similar configuration. The `name` of the network is mandatory and
+Configuration sets must be configured using `network_encryption_configs` variable. The `name` of the configuration set is mandatory and
 used for identification. Pre-shared key can be specified using `psk`.
 
-    network_encryption_host_networks:
+    network_encryption_host_configs:
       - name: default
 
-Hosts can be attached to the networks using `network_encryption_host_networks` variable. Networks are referenced by `name`.      
+Hosts can be attached to a configuration set using `network_encryption_host_configs` variable. Configuration sets are referenced by `name`.      
 
-    network_encryption_networks:
+    network_encryption_configs:
       - name: default
         interface: eth0
         psk: secret
 
 The interface can be specified using `interface` variable. If not specified, it defaults to `ansible_default_ipv4.interface`.
 
-    network_encryption_networks:
+    network_encryption_configs:
       - name: default
         psk: secret
         params:
@@ -64,7 +64,7 @@ General connection parameters like `lifetime` may be set within `params` section
       keyexchange: ikev2
       type: tunnel
 
-The `params` within `network_encryption_networks` extend/override default connection parameters present above. 
+The `params` within `network_encryption_configs` extend/override default connection parameters present above. 
 
     network_encryption_config_dir: "/etc/ipsec.d/{{ role_name }}"
     

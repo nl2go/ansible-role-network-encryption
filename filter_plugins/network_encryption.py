@@ -5,7 +5,7 @@ class FilterModule(object):
     def filters(self):
         return {
             'network_encryption_point_to_point_connections': get_point_to_point_connections,
-            'network_encryption_networks': get_networks
+            'network_encryption_configs': get_network_encryption_configs
         }
 
 
@@ -66,22 +66,22 @@ def get_point_to_point_connections(remote_hostnames, hostname, hostvars, interfa
     return connections
 
 
-def get_networks(networks, play_hosts, hostvars, variable_name='network_encryption_host_networks'):
-    networks = list_to_dict(networks)
+def get_network_encryption_configs(configs, play_hosts, hostvars, variable_name='network_encryption_host_configs'):
+    configs = list_to_dict(configs)
 
     for host in play_hosts:
         host_config = hostvars.get(host)
-        host_networks = host_config.get(variable_name)
-        if host_networks:
-            for host_network in host_networks:
-                network_name = host_network.get('name')
-                network = networks.get(network_name)
-                hosts = network.get('hosts')
+        host_configs = host_config.get(variable_name)
+        if host_configs:
+            for host_config in host_configs:
+                config_name = host_config.get('name')
+                config = configs.get(config_name)
+                hosts = config.get('hosts')
                 if not hosts:
                     hosts = []
-                    network['hosts'] = hosts
+                    config['hosts'] = hosts
                 hosts.append(host)
-    return list(networks.values())
+    return list(configs.values())
 
 
 def list_to_dict(objs, attr='name'):

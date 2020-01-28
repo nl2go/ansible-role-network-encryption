@@ -35,23 +35,23 @@ provisioner:
   inventory:
     group_vars:
       all:
-        network_encryption_networks:
+        network_encryption_configs:
           - name: network_1
             psk: secret_1
           - name: network_2
             psk: secret_2
     host_vars:
       one:
-        network_encryption_host_networks:
+        network_encryption_host_configs:
           - name: network_1
         expected_active_connections: 1
       two:
-        network_encryption_host_networks:
+        network_encryption_host_configs:
           - name: network_1
           - name: network_2
         expected_active_connections: 2
       three:
-        network_encryption_host_networks:
+        network_encryption_host_configs:
           - name: network_2
         expected_active_connections: 1
   lint:
