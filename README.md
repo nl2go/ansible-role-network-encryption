@@ -81,9 +81,9 @@ Defines the custom IPsec configuration directory for isolation purposes.
 Tags can be used to limit the role execution to a particular task module. Following tags are available:
 
 - `network_encryption`: Covers the full role lifecycle.
-- `network-encryption-variables`: Gathers OS specific variables
-- `network-encryption-install`: Installs required packages
-- `network-encryption-config`: Configures required packages
+- `network_encryption_variables`|`variables`: Gathers OS specific variables
+- `network_encryption_install`|`install`: Installs required packages
+- `network_encryption_config`|`config`: Configures required packages
 
 ## Dependencies
 

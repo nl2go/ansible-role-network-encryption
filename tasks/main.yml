@@ -7,15 +7,15 @@
         - "default.yml"
       paths:
         - ../vars
-  tags: ['network-encryption', 'network-encryption-variables']
+  tags: ['network_encryption', 'network_encryption_variables', 'variables']
   when: network_encryption_host_configs is defined and (network_encryption_host_configs | length > 0)
 
 - name: Install strongSwan
   include: install.yml
-  tags: ['network-encryption', 'network-encryption-install']
+  tags: ['network_encryption', 'network_encryption_install', 'install']
   when: network_encryption_host_configs is defined and (network_encryption_host_configs | length > 0)
 
 - name: Configure strongSwan
   include: config/main.yml
-  tags: ['network-encryption', 'network-encryption-config']
+  tags: ['network_encryption', 'network_encryption_config', 'config']
   when: network_encryption_host_configs is defined and (network_encryption_host_configs | length > 0)
