@@ -11,5 +11,6 @@
           msg: "{{ ipsec_status_result.stdout }}"
       - name: Validate IPsec connection state
         assert:
-          that: "'{{ expected_active_connections | default(1) }} up, 0 connecting' in ipsec_status_result.stdout"
+          that: "'{{ expected_active_connections | default(1) }} up, 0 connecting' in ipsec_status_result.stdout \
+            or '{{ (expected_active_connections | default(1)) + 1 }} up, 0 connecting' in ipsec_status_result.stdout"
           fail_msg: "Unexpected IPsec connection state: {{ ipsec_status_result.stdout }}"
