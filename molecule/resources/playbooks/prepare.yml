@@ -8,3 +8,10 @@
         state: present
       with_items:
         - kmod
+
+- name: Prepare controller
+  hosts: localhost
+  tasks:
+    - name: Install ansible-filter package
+      pip:
+        name: ansible-filter==1.0.0

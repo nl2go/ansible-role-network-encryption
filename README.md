@@ -10,7 +10,7 @@ An Ansible Role that manages network encryption between inventory hosts based on
 
 ## Requirements
 
-None.
+- [ansible-filter](https://github.com/nl2go/ansible-filter) - `pip install ansible-filter==1.0.0`
 
 ## Role Variables
 
