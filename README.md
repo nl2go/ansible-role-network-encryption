@@ -57,7 +57,7 @@ The interface can be specified using `interface` variable. If not specified, it 
             
 General connection parameters like `lifetime` may be set within `params` section (s. [ipsec.conf](https://wiki.strongswan.org/projects/strongswan/wiki/ConnSection) for full parameter description).
 
-    network_encryption_default_connection_params:
+    network_encryption_default_config_params:
       ike: aes256gcm16-prfsha384-modp4096,aes256gcm16-prfsha384-ecp384!
       esp: aes256gcm16-modp4096,aes256gcm16-ecp384!
       keyingtries: 0
