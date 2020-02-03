@@ -12,7 +12,7 @@ An Ansible Role that manages network encryption between inventory hosts based on
 
 | Name | Type | Version | Location |
 |---|---|---|---|
-| [ansible-filter](https://github.com/nl2go/ansible-filter) | Python package | 1.0.1 | Control node |
+| [ansible-filter](https://github.com/nl2go/ansible-filter) | Python package | 1.0.0 | Control node |
 
 
 ## Role Variables
