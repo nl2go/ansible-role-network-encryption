@@ -4,7 +4,7 @@
 
 - name: Configure network
   include_tasks: network/main.yml
-  with_items: "{{ network_encryption_configs | network_encryption_configs(play_hosts, hostvars) }}"
+  with_items: "{{ network_encryption_configs | network_encryption_configs(ansible_play_hosts, hostvars) }}"
   when: inventory_hostname in network_encryption_config.hosts
     or inventory_hostname in network_encryption_config.absent_hosts
   loop_control:
