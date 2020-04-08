@@ -5,6 +5,14 @@
     state: present
   with_items: "{{ network_encryption_packages }}"
 
+- name: Create IPsec service
+  template:
+    src: "./{{ network_encryption_ipsec_service_template_name }}"
+    dest: "{{ network_encryption_ipsec_service_destination_path }}"
+    owner: 'root'
+    group: 'root'
+    mode: 'u=rwx,g=rx,o=rx'
+
 - name: Ensure IPsec service is started
   service:
     name: "{{ network_encryption_ipsec_service_name }}"

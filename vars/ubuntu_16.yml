@@ -1,5 +1,7 @@
 ---
-network_encryption_ipsec_service_name: strongswan
+network_encryption_ipsec_service_name: ipsec
+network_encryption_ipsec_service_template_name: ipsec-SysVinit.j2
+network_encryption_ipsec_service_destination_path: /etc/init.d/ipsec
 network_encryption_packages:
   - strongswan
   - strongswan-plugin-openssl
